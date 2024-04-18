@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hand and Person Detection with Heartbeat</title>
+</head>
+<body>
+  <video id="inputVideo" autoplay muted playsinline width="640" height="480"></video>
+  <canvas id="outputCanvas" width="640" height="480"></canvas>
+<div id="message" style="position: absolute; top: 20px; left: 20px; font-size: 24px;"></div>
+<div id="speechDisplay" style="position: absolute; top: 520px; left: 20px; font-size: 18px; color: #000000;"></div>
+<div id="proximityDisplay">Proximity: -</div>
+
+<audio id="heartbeatSound" preload="auto">
+  <source src="heartbeat.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<button id="startButton">Start Heartbeat</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
+<script>
+  
+  var ws = new WebSocket("ws://192.168.100.1:1880/bpm");
+ws.onopen = function() {
+  ws.send("Hello websocket server!");
+};
+ws.onmessage = function (evt) {
+  console.log(evt.data);
+};
+
+const videoElement = document.getElementById('inputVideo');
+const canvasElement = document.getElementById('outputCanvas');
+const canvasCtx = canvasElement.getContext('2d');
+const messageDiv = document.getElementById('message');
+const speechDisplayDiv = document.getElementById('speechDisplay');
+const heartbeatSound = document.getElementById('heartbeatSound');
+heartbeatSound.loop = true; // Enable looping for continuous playback
+let heartbeatSpeed = 1; // Normal heartbeat speed
+let lastHandDetected = false;
+let lastPersonDetected = false;
+let lastHeartbeatSpeed = heartbeatSpeed;
+
+// interval on every 200ms
+setInterval(() => {
+  // send message to websocket
+  if (lastHeartbeatSpeed != heartbeatSpeed) {
+    ws.send(heartbeatSpeed);
+    lastHeartbeatSpeed = heartbeatSpeed;
+  }
+}, 200);
+
+// Function to start heartbeat sound playback
+function startHeartbeatSound() {
+  heartbeatSound.play();
+  // Remove the event listener to prevent multiple playbacks
+  document.getElementById('startButton').style.display = 'none';
+}
+
+// Add an event listener to start heartbeat sound playback when the button is clicked
+document.getElementById('startButton').addEventListener('click', startHeartbeatSound);
+
+// Initialize the camera
+navigator.mediaDevices.getUserMedia({ video: {} })
+  .then((stream) => {
+    videoElement.srcObject = stream;
+    videoElement.onloadedmetadata = () => {
+      videoElement.play();
+    };
+  })
+  .catch((err) => {
+    console.error('Access to camera was denied!', err);
+  });
+
+// Initialize MediaPipe Hands and COCO-SSD models
+Promise.all([handpose.load(), cocoSsd.load()]).then(([handModel, personModel]) => {
+  setInterval(() => {
+    Promise.all([handModel.estimateHands(videoElement), personModel.detect(videoElement)])
+      .then(([handResults, personResults]) => {
+        handleHandAndPersonResults(handResults, personResults);
+      });
+  }, 100);
+});
+
+// Function to handle hand and person detection results
+function handleHandAndPersonResults(handResults, personResults) {
+  canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+  // Check hand detection
+  if (handResults.length > 0) {
+    lastHandDetected = true;
+    messageDiv.innerText = 'Hand detected!';
+
+  } else {
+    lastHandDetected = false;
+    // If no hand detected, clear the message and reset heartbeat speed
+    messageDiv.innerText = '';
+    heartbeatSpeed = 1; // Normal heartbeat speed
+  }
+
+  // Check person detection
+  let personCount = 0;
+  for (const prediction of personResults) {
+    if (prediction.class === 'person') {
+      personCount++;
+    }
+  }
+  if (personCount > 1) {
+    messageDiv.innerText = 'More than one person detected!';
+    heartbeatSpeed = 2; // Faster heartbeat when more than one person is detected
+  } else if (personCount === 1) {
+    messageDiv.innerText = ''; // Clear the message if only one person is detected
+  }
+
+  // Adjust heartbeat speed if both hand and person are detected
+  if (lastHandDetected && personCount > 0) {
+    heartbeatSpeed = 3; // Even faster heartbeat
+  }
+
+  // Set heartbeat speed and play sound
+  heartbeatSound.playbackRate = heartbeatSpeed;
+
+  // Update proximity display
+  if (personResults.length > 0) {
+    const proximity = calculateProximity(personResults[0].bbox, videoElement);
+    updateProximity(proximity);
+  } else {
+    proximityDisplay.textContent = "Proximity: -";
+  }
+}
+
+// Function to calculate proximity of person
+function calculateProximity(bbox, videoElement) {
+    const videoWidth = videoElement.videoWidth;
+    const videoHeight = videoElement.videoHeight;
+    const centerX = videoWidth / 2;
+    const centerY = videoHeight / 2;
+    const faceCenterX = bbox[0] + bbox[2] / 2;
+    const faceCenterY = bbox[1] + bbox[3] / 2;
+    const distance = Math.sqrt(Math.pow(centerX - faceCenterX, 2) + Math.pow(centerY - faceCenterY, 2));
+    return distance;
+}
+
+// Function to update proximity display
+function updateProximity(proximity) {
+    proximityDisplay.textContent = "Proximity: ";
+    if (proximity < 70) {
+        proximityDisplay.textContent += "Very Close";
+        heartbeatSpeed = 2; // Faster heartbeat when very close
+        heartbeatSound.playbackRate = heartbeatSpeed; // Update playback rate immediately
+    } else if (proximity < 100) {
+        proximityDisplay.textContent += "Close";
+    } else {
+        proximityDisplay.textContent += "Far";
+    }
+}
+
+</script>
+</body>
+</html>

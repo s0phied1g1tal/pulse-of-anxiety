@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch WebSocket Server",
+            "program": "${workspaceFolder}/server.js",
+            "args": ["--websocket-path", "/bpm"]
+        }
+    ]
+}
