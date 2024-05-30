@@ -102,3 +102,28 @@ The heart's movement is controlled by a servo motor connected to a Raspberry Pi.
 
 ## WebSocket Implementation
 WebSocket communication was employed to enable real-time interaction with the project. A WebSocket connection was established with a server, allowing bidirectional communication. Messages sent and received through the WebSocket facilitated various interactions and adjustments within the project.
+
+A WebSocket connection is established with a server using the WebSocket constructor. In this case, the WebSocket server is located at the address <b>"ws://192.168.100.1:1880/bpm".</b>
+```javascript 
+var ws = new WebSocket("ws://192.168.100.1:1880/bpm");
+```
+This line creates a new WebSocket instance ```javascript  (ws)``` and establishes a connection to the WebSocket server at the specified URL ```javascript("ws://192.168.100.1:1880/bpm")```.
+
+WebSocket Events:
+Event handlers are attached to the WebSocket instance to handle different WebSocket events such as ```javascript onopen``` and ```javascript onmessage ```.
+```javascript 
+ws.onopen = function() { // Code to execute when the WebSocket connection is successfully opened };
+ws.onmessage = function (evt) { // Code to execute when a message is received from the WebSocket server };
+ ```
+The onopen event handler is triggered when the WebSocket connection is successfully established with the server. Any code within this handler executes when the connection is open.
+The onmessage event handler is triggered when a message is received from the WebSocket server. The received message is available in the evt parameter, and the code within this handler processes the received message.
+WebSocket Communication:
+Once the WebSocket connection is open (onopen event), a message is sent to the server using the send() method.
+ws.onopen = function() { ws.send("Hello websocket server!"); };
+In this example, the message "Hello websocket server!" is sent to the server when the WebSocket connection is opened.
+Handling Received Messages:
+When a message is received from the WebSocket server (onmessage event), a callback function is executed to handle the received message.ws.onmessage = function (evt) { console.log(evt.data); };
+In this example, the received message is logged to the console using console.log(). You can replace this line with any custom logic to process the received message as needed.
+
+
+
