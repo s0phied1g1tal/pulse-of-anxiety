@@ -62,15 +62,40 @@ function calculateProximity(bbox, videoElement) {
 ```
 
 The function calculates the proximity of the detected person to the camera by determining the distance between the center of the video frame and the center of the person's bounding box.
-It uses the width and height of the video frame to determine the center (centerX, centerY).
+It uses the width and height of the video frame to determine the center ```javascript (centerX, centerY)```.
 
-Then, it calculates the center of the person's bounding box (faceCenterX, faceCenterY) by adding half of the width and height to the top-left coordinates of the bounding box.
-Finally, it calculates the distance between these two points using the Euclidean distance formula .
-```javascript
-Math.sqrt(Math.pow(centerX - faceCenterX, 2) + Math.pow(centerY - faceCenterY, 2))
-```
+Then, it calculates the center of the person's bounding box ```javascript (faceCenterX, faceCenterY)``` by adding half of the width and height to the top-left coordinates of the bounding box.
+Finally, it calculates the distance between these two points using the Euclidean distance formula ```javascript Math.sqrt(Math.pow(centerX - faceCenterX, 2) + Math.pow(centerY - faceCenterY, 2))```
 ### Amount of People
 This function counts the number of people detected in the camera frame, informing the social context and influencing heartbeat speed adjustments.
+```javascript
+// Function to handle hand and person detection results
+function handleHandAndPersonResults(handResults, personResults) {
+    let personCount = 0;
+    for (const prediction of personResults) {
+        if (prediction.class === 'person') {
+            personCount++;
+        }
+    }
+    // Logic to handle the number of people detected
+}
+```
+The function iterates through each prediction in ```javascript personResults ``` using a loop ```javascript (for (const prediction of personResults))```.
+For each prediction, it checks if the class label is 'person' ```javascript(if (prediction.class === 'person'))```.
+If the label matches 'person', it increments a counter variable ```javascript(personCount++)```, indicating the presence of a person in the frame.
+
+For both of these functions the same models are used .
+The handpose model is imported from the @tensorflow-models/handpose package. This model is responsible for detecting and estimating the positions of hands in the camera frame.
+```javascript 
+import * as cocoSsd from '@tensorflow-models/coco-ssd';
+```
+This import statement brings in the handpose model functionality, allowing the code to utilize its methods for hand detection and tracking.
+COCO-SSD Model:
+The COCO-SSD model is imported from the @tensorflow-models/coco-ssd package. This model is used for general object detection, including the detection of people in the camera frame.
+```javascript
+import * as cocoSsd from '@tensorflow-models/coco-ssd';
+```
+This import statement imports the COCO-SSD model, enabling the code to perform object detection and identify people among other objects in the camera feed.
 
 ### Movement of Heart
 The heart's movement is controlled by a servo motor connected to a Raspberry Pi. I used Node-RED to synchronize the motor's movement with the heartbeat simulation, facilitated through a WebSocket connection.
