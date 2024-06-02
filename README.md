@@ -1,8 +1,9 @@
-# Pulse of anxiety
 
-## Project Video
+<p>
+  <img src="banner.jpg" alt="banner" width="100%" />
+</p>
 
-Click the image below to watch the project video:
+[Watch the projectvideo!](https://youtu.be/kiMDqJbRSho)
 
 The installation is a symbolic representation of the inner struggle of someone with social anxiety disorder. The heart, the central element of the installation, beats as a metaphor for the inner turmoil and tension experienced by people with social anxiety. Through interactive elements such as proximity sensors, pointing gestures, and the number of people in front of the artwork, the heart responds to the presence and interaction of the audience. The installation aims to raise awareness and empathy for the challenges of people with social anxiety and encourages viewers to pay more attention to their interactions with others, understanding the invisible struggles that others may experience.
 
