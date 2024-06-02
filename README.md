@@ -1,6 +1,8 @@
 # Pulse of anxiety
 
-**Sophie Van Schil**
+## Project Video
+
+Click the image below to watch the project video:
 
 The installation is a symbolic representation of the inner struggle of someone with social anxiety disorder. The heart, the central element of the installation, beats as a metaphor for the inner turmoil and tension experienced by people with social anxiety. Through interactive elements such as proximity sensors, pointing gestures, and the number of people in front of the artwork, the heart responds to the presence and interaction of the audience. The installation aims to raise awareness and empathy for the challenges of people with social anxiety and encourages viewers to pay more attention to their interactions with others, understanding the invisible struggles that others may experience.
 
@@ -20,7 +22,7 @@ My installation is created with HTML, CSS, and JavaScript placed in a Vite proje
 * a webcam ( Hama c-400 webcam)
 * Raspberry Pi
 * HDMI cable
-* Rotating platform mechanism (or Rotating servo motor setup)
+* RaspberrPi servo motor
 * materials to craft a heart, to your liking ( I used a silicone halloween mask and formo clay)
   
 # Research
@@ -100,7 +102,7 @@ This import statement imports the COCO-SSD model, enabling the code to perform o
 ### Movement of Heart
 The heart's movement is controlled by a servo motor connected to a Raspberry Pi. I used Node-RED to synchronize the motor's movement with the heartbeat simulation, facilitated through a WebSocket connection.
 
-## WebSocket Implementation
+### WebSocket Implementation
 WebSocket communication was employed to enable real-time interaction with the project. A WebSocket connection was established with a server, allowing bidirectional communication. Messages sent and received through the WebSocket facilitated various interactions and adjustments within the project.
 
 A WebSocket connection is established with a server using the WebSocket constructor. In this case, the WebSocket server is located at the address <b>"ws://192.168.100.1:1880/bpm".</b>
