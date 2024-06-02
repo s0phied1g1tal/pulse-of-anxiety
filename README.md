@@ -38,23 +38,29 @@ I wanted this project to be aesthetically pleasing while also thought-provoking.
 ## Sketches
 Sketches played a crucial role in shaping the final product. I started by sketching ideas and creating a mood board to visualize the aesthetic direction. The goal was for the installation to blend seamlessly into its surroundings, revealing its true nature only upon interaction. The heart was designed to look realistic and grim, set against a technical background of circuits and motherboards.
 <p>
-  <img src="lofi.png" alt="Lo-fi Sketch" width="25%" />
-  <img src="moodboard.png" alt="Moodboard" width="45%" />
-  <img src="438065545_397356993161668_7211329490780529798_n.jpg" alt="final sketch" width="45%" />
+  <img src="lofi.png" alt="Lo-fi Sketch" width="22%" />
+  <img src="moodboard.png" alt="Moodboard" width="40%" />
+  <img src="438065545_397356993161668_7211329490780529798_n.jpg" alt="final sketch" width="31%" />
 </p>
 
 ## Construction
 I began by constructing the heart. Using a small balloon and a silicone Halloween clown mask, I created the base of the heart. Formo clay was used for the top, and a hot glue gun was used to add realistic veins. After painting with acrylics and applying a mod podge varnish, the heart looked slimy and slippery. I then placed the heart within a cheap Ikea frame (at the time the image was taken i used another frame) alongside circuit boards.
 <p>
-  <img src="431960305_256817027515634_1138305139189845454_n.jpg" alt="heartmodel" width="45%" />
-  <img src="431904329_932697971862171_9075679803931957388_n.jpg " alt="heartmodelframe" width="25%" />
-  <img src="431883204_443381634804168_5439522827667291270_n.jpg " alt="heartmodelpainted" width="10%" />
+  <img src="431960305_256817027515634_1138305139189845454_n.jpg" alt="heartmodel" width="22%" />
+  <img src="431904329_932697971862171_9075679803931957388_n.jpg " alt="heartmodelframe" width="33%" />
+  <img src="431883204_443381634804168_5439522827667291270_n.jpg " alt="heartmodelpainted" width="22%" />
 </p>
+
 ## Code
 ### Hand Detection
 Hand detection was essential to capture user interactions such as pointing or touching, which would increase the heartbeat simulation. I implemented this using the MediaPipe Handpose library from TensorFlow, which provides a palm detector and hand-skeleton finger tracking model.
 
 In the code above i start with importing the handpose models. Then i added the function so it detects when there is a hand detected an when there isnt. when a hand would be detected i wanted the interface to say “hand detected” 
+<p>
+  <img src="431960305_256817027515634_1138305139189845454_n.jpg" alt="heartmodel" width="22%" />
+  <img src="431904329_932697971862171_9075679803931957388_n.jpg " alt="heartmodelframe" width="33%" />
+  
+</p>
 
 ### Proximity Detection
 This function calculates the proximity of a person to the camera, crucial for adjusting heartbeat speed based on perceived interaction levels. It determines the distance between the center of the video frame and the center of the person's bounding box.
