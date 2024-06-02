@@ -118,11 +118,16 @@ ws.onmessage = function (evt) { // Code to execute when a message is received fr
 The onopen event handler is triggered when the WebSocket connection is successfully established with the server. Any code within this handler executes when the connection is open.
 The onmessage event handler is triggered when a message is received from the WebSocket server. The received message is available in the evt parameter, and the code within this handler processes the received message.
 WebSocket Communication:
-Once the WebSocket connection is open (onopen event), a message is sent to the server using the send() method.
+Once the WebSocket connection is open```javascript(onopen event) ```, a message is sent to the server using the ```javascript send()``` method.
+```javascript 
 ws.onopen = function() { ws.send("Hello websocket server!"); };
-In this example, the message "Hello websocket server!" is sent to the server when the WebSocket connection is opened.
+ ```
+In this example, the message ```javascript "Hello websocket server!" ``` is sent to the server when the WebSocket connection is opened.
 Handling Received Messages:
-When a message is received from the WebSocket server (onmessage event), a callback function is executed to handle the received message.ws.onmessage = function (evt) { console.log(evt.data); };
+When a message is received from the WebSocket server ```javascript (onmessage event) ```, a callback function is executed to handle the received message. 
+```javascript
+ws.onmessage = function (evt) { console.log(evt.data); };
+ ```
 In this example, the received message is logged to the console using console.log(). You can replace this line with any custom logic to process the received message as needed.
 
 
