@@ -57,9 +57,8 @@ Hand detection was essential to capture user interactions such as pointing or to
 
 In the code above i start with importing the handpose models. Then i added the function so it detects when there is a hand detected an when there isnt. when a hand would be detected i wanted the interface to say “hand detected” 
 <p>
-  <img src="431960305_256817027515634_1138305139189845454_n.jpg" alt="heartmodel" width="22%" />
-  <img src="431904329_932697971862171_9075679803931957388_n.jpg " alt="heartmodelframe" width="33%" />
-  
+  <img src="hand not detected.png" alt="notdetected" width="40%" />
+  <img src="handetected.png" alt="detected" width="40%" />
 </p>
 
 ### Proximity Detection
