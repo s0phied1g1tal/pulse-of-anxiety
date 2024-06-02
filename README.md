@@ -130,5 +130,10 @@ ws.onmessage = function (evt) { console.log(evt.data); };
  ```
 In this example, the received message is logged to the console using console.log(). You can replace this line with any custom logic to process the received message as needed.
 
+## Valkuilen en Tips
+
+Voor mij waren een van de grootste valkuilen tijdmanagement en onvoorzichtigheid. Ik had niet genoeg tijd om mijn project precies af te werken zoals ik wilde tegen de dag van de expo. Ook twee dagen voor de expo liet ik mijn installatie vallen, waardoor sommige dingen er niet zo netjes uitzagen als ik had gewild. Dergelijke dingen kunnen zeker vermeden worden als je niet op een strak schema werkt, maar in plaats daarvan tijd maakt voor je plezier.
+
+Dus, mijn grootste tip zou zijn: Heb plezier! Deze installatie maken was erg stressvol, maar op andere momenten ook enorm leuk om je gedachten eens ergens anders op te richten. Dus ga ervoor!
 
 
