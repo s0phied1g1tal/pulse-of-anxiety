@@ -28,7 +28,7 @@ My installation is created with HTML, CSS, and JavaScript placed in a Vite proje
 # Research
 I wanted this project to be easy on the eyes yet mentally engaging. Working with a theme surrounding social anxiety required careful research to ensure it genuinely represented the struggles of individuals with this disorder.
 
-I researched behaviors in the DSM5 that people with social anxiety find discomforting and identified interactions that induce anxiety. I concluded that issues such as close proximity, critical body language like pointing, and being surrounded by large groups were the main concerns. So, I decided to incorporate these aspects into my project.
+I researched behaviors in the DSM-5 that people with social anxiety find discomforting and identified interactions that induce anxiety. I concluded that issues such as close proximity, critical body language like pointing, and being surrounded by large groups were the main concerns. So, I decided to incorporate these aspects into my project.
 
 # Project Overview
 
@@ -54,11 +54,25 @@ I began by constructing the heart. Using a small balloon and a silicone Hallowee
 ## Code
 ### Hand Detection
 Hand detection was essential to capture user interactions such as pointing or touching, which would increase the heartbeat simulation. I implemented this using the MediaPipe Handpose library from TensorFlow, which provides a palm detector and hand-skeleton finger tracking model.
+function handleHandAndPersonResults(handResults, personResults) {
+  canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+```javascript
+  // Check hand detection
+  if (handResults.length > 0) {
+    lastHandDetected = true;
+    messageDiv.innerText = 'Hand detected!';
 
+  } else {
+    lastHandDetected = false;
+    // If no hand detected, clear the message and reset heartbeat speed
+    messageDiv.innerText = '';
+    heartbeatSpeed = 1; // Normal heartbeat speed
+  }
+```
 In the code above i start with importing the handpose models. Then i added the function so it detects when there is a hand detected an when there isnt. when a hand would be detected i wanted the interface to say “hand detected” 
 <p>
-  <img src="hand not detected.png" alt="notdetected" width="40%" />
-  <img src="handetected.png" alt="detected" width="40%" />
+  <img src="hand not detected.png" alt="notdetected" width="49%" />
+  <img src="handetected.png" alt="detected" width="49%" />
 </p>
 
 ### Proximity Detection
